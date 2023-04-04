@@ -1,7 +1,11 @@
 package net.all_clients.testmod;
 
 import com.mojang.logging.LogUtils;
+import net.all_clients.testmod.item.ModCreativeModeTabs;
+import net.all_clients.testmod.item.ModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -26,6 +30,8 @@ public class testmod
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModItems.register(modEventBus);
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -43,6 +49,16 @@ public class testmod
 
     private void addCreative(CreativeModeTabEvent.BuildContents event)
     {
+        if(event.getTab() == ModCreativeModeTabs.TAB1) {
+            event.accept((ModItems.BLACK_OPAL));
+            event.accept((ModItems.RAW_BLACK_OPAL));
+        }
+        if(event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(Items.COMMAND_BLOCK);
+            event.accept(Items.BARRIER);
+            event.accept(Items.REPEATING_COMMAND_BLOCK);
+            event.accept(Items.CHAIN_COMMAND_BLOCK);
+        }
     }
 
 
